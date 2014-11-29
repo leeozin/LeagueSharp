@@ -51,6 +51,7 @@ namespace VayneHunterRework
             Menu.AddSubMenu(new Menu("[VH] Harrass", "Harrass"));
             Menu.SubMenu("Harrass").AddItem(new MenuItem("UseQH", "Use Q Harrass")).SetValue(true);
             Menu.SubMenu("Harrass").AddItem(new MenuItem("UseEH", "Use E Harrass").SetValue(true));
+            Menu.SubMenu("Harrass").AddItem(new MenuItem("UseRH", "Use R Harrass").SetValue(true));
            // Menu.SubMenu("Harrass").AddItem(new MenuItem("3RdE", "Try to 3rd Proc E").SetValue(true));
             Menu.SubMenu("Harrass").AddItem(new MenuItem("QManaH", "Min Q Mana %").SetValue(new Slider(35, 1, 100)));
             Menu.SubMenu("Harrass").AddItem(new MenuItem("EManaH", "Min E Mana %").SetValue(new Slider(20, 1, 100)));
@@ -307,7 +308,11 @@ namespace VayneHunterRework
                     break;
                 case Orbwalking.OrbwalkingMode.Mixed:
                     var ManaH = Menu.Item("QManaH").GetValue<Slider>().Value;
-                    if (getPerValue(true) >= ManaH && isMenuEnabled("UseQH")){ if (!customPos){ CastTumble(target);} else{ CastTumble(Pos, target);}}
+                    if (getPerValue(true) >= ManaH && isMenuEnabled("UseQH")){ if (!customPos){ CastTumble(target);} else{ CastTumble(Pos, target);}
+                     {
+                        if(isMenuEnabled("UseRH") && R.IsReady())R.CastOnUnit(Player);
+                        if(!customPos){CastTumble(target);}else{CastTumble(Pos,target);}
+                    }
                     break;
                 case Orbwalking.OrbwalkingMode.LastHit:
                     var ManaLH = Menu.Item("QManaLH").GetValue<Slider>().Value;
